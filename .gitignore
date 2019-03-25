@@ -71,6 +71,7 @@ target/
 #vim
 *.swp
 *.swo
+*.xml
 
 #pycharm
 .idea/*
