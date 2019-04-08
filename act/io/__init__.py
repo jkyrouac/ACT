@@ -18,3 +18,5 @@ This module contains procedures for reading and writing various ARM datasets.
 
 from . import armfiles
 from . import dataset
+from . import csvfiles
+
