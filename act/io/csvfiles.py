@@ -46,10 +46,11 @@ def read_csv(filename):
     #Read data using pandas read_csv
     arm_ds = pd.read_csv(filename)#.to_xarray()
     
-    #Set Coordinates
+    #Set Coordinates if there's a variable date_time
     if arm_ds.date_time.any():
         arm_ds.date_time = arm_ds.date_time.astype('datetime64')
-        arm_ds = arm_ds.set_index('date_time')
+        arm_ds.time = arm_ds.date_time
+        arm_ds = arm_ds.set_index('time')
 
     #Convert to xarray DataSet
     arm_ds = arm_ds.to_xarray()
