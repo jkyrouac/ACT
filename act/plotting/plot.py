@@ -256,7 +256,7 @@ class TimeSeriesDisplay(object):
 
     def plot(self, field, subplot_index=(0, ),
              line_color='k', cmap=None, cbmin=None, cbmax=None, set_title=None,
-             add_nan=False, **kwargs):
+             add_nan=False,day_night_background=False, **kwargs):
         """
         Makes a timeseries plot. If subplots have not been added yet, an axis will
         be created assuming that there is only going to be one plot.
@@ -289,7 +289,12 @@ class TimeSeriesDisplay(object):
         data = self._arm[field]
         dim = list(self._arm[field].dims)
         xdata = self._arm[dim[0]]
-        ytitle = ''.join(['(', data.attrs['units'], ')'])
+
+        #Set ytitle to units if available, otherwise leave blank for now
+        if 'units' in data.attrs:
+            ytitle = ''.join(['(', data.attrs['units'], ')'])
+        else:
+            ytitle = ''
         if len(dim) > 1:
             ydata = self._arm[dim[1]]
             units = ytitle
@@ -308,7 +313,8 @@ class TimeSeriesDisplay(object):
         ax = self.axes[subplot_index]
 
         if ydata is None:
-            self.day_night_background(subplot_index)
+            if day_night_background:
+                self.day_night_background(subplot_index)
             ax.plot(xdata, data, '.', color=line_color)
         else:
             # Add in nans to ensure the data are not streaking
