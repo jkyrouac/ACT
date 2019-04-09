@@ -10,6 +10,7 @@ This module contains I/O operations for loading csv files
 # import standard modules
 import glob
 import pandas as pd
+import numpy as np
 
 from .dataset import ACTAccessor
 from .armfiles import check_arm_standards
@@ -47,6 +48,7 @@ def read_csv(filename):
     
     #Set Coordinates
     if arm_ds.date_time.any():
+        arm_ds.date_time = arm_ds.date_time.astype('datetime64')
         arm_ds = arm_ds.set_index('date_time')
 
     #Convert to xarray DataSet
