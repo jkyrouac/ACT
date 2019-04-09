@@ -348,10 +348,16 @@ class TimeSeriesDisplay(object):
             dsname = list(self._arm.keys())[0]
 
         # Get data and dimensions
-        data = self._arm[dsname][field]
-        dim = list(self._arm[dsname][field].dims)
-        xdata = self._arm[dsname][dim[0]]
-        ytitle = ''.join(['(', data.attrs['units'], ')'])
+        data = self._arm[field]
+        dim = list(self._arm[field].dims)
+        xdata = self._arm[dim[0]]
+
+        #Set ytitle to units if available, otherwise leave blank for now
+        if 'units' in data.attrs:
+            ytitle = ''.join(['(', data.attrs['units'], ')'])
+        else:
+            ytitle = ''
+
         if len(dim) > 1:
             ydata = self._arm[dsname][dim[1]]
             units = ytitle
